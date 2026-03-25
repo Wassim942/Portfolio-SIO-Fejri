@@ -8,13 +8,35 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .page { display: none; }
-        .page.active { display: block; }
+        
+        /* Animation de coulissement */
+        .page.active { 
+            display: block; 
+            animation: slideIn 0.5s ease-out forwards;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
         
         #page-accueil.active { 
             display: flex; 
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100vh;
             z-index: 1000;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .hero-gradient { background: linear-gradient(135deg, #0019FF 0%, #0012BB 100%); }
@@ -140,7 +162,7 @@
                         <div class="mt-6 space-y-8">
                             <div class="relative pl-6 border-l-2 border-blue-600">
                                 <div class="absolute -left-[9px] top-1 w-4 h-4 bg-blue-600 rounded-full border-4 border-white"></div>
-                                <p class="text-xs font-bold text-blue-600 uppercase">2024 - 2026 (Alternance)</p>
+                                <p class="text-xs font-bold text-slate-500 uppercase">2024 - 2026 (Alternance)</p>
                                 <p class="font-bold text-slate-800 uppercase">Technicien Support</p>
                                 <p class="text-slate-700 font-medium italic mb-2">Valophis Habitat, Créteil</p>
                                 <ul class="list-disc ml-5 space-y-1 text-slate-600">
@@ -210,7 +232,7 @@
 
         <div id="page-epreuves" class="page max-w-6xl mx-auto px-6 py-12 space-y-12">
             <div class="flex items-center gap-4">
-                <div class="h-10 w-2 bg-blue-600 rounded-full"></div>
+                <div class="h-10 w-2 bg-slate-900 rounded-full"></div>
                 <h2 class="text-3xl font-bold italic text-slate-800">Dossiers d'Épreuves</h2>
             </div>
             
@@ -248,7 +270,7 @@
                 </div>
 
                 <div class="max-w-2xl mx-auto space-y-4 text-sm text-slate-700 mb-10 text-center">
-                    <p class="font-bold text-blue-600 uppercase text-xs tracking-widest mb-4">Organisation de l'épreuve</p>
+                    <p class="font-bold text-blue-900 uppercase text-xs tracking-widest mb-4">Organisation de l'épreuve</p>
                     <div class="grid md:grid-cols-2 gap-4">
                         <div class="bg-slate-50 p-3 rounded-xl border-l-4 border-blue-600">
                             <p class="font-bold text-blue-600">Phase 1</p>
@@ -262,26 +284,26 @@
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-6">
-                    <div class="p-6 bg-blue-50/50 rounded-2xl border border-blue-100 text-center">
+                    <div class="p-6 bg-white rounded-2xl border border-blue-100 text-center shadow-sm">
                         <h4 class="font-bold underline mb-3 italic">Activité 1 : GLPI</h4>
                         <p class="text-xs text-slate-700 mb-4 italic">Mise en place et configuration de l’outil de gestion GLPI pour la supervision du parc informatique de la M2L.</p>
                         <div class="flex justify-center gap-2">
-                            <a href="Fiche E6 - Fejri Wassim - GLPI.docx" target="_blank" class="btn-link text-xs">
+                            <a href="Document - Fejri Wassim - GLPI.pdf" target="_blank" class="btn-link text-xs bg-blue-600 text-white">
                                 <i class="fas fa-eye mr-2"></i> Consulter
                             </a>
-                            <a href="Fiche E6 - Fejri Wassim - GLPI.docx" download class="btn-link text-xs">
+                            <a href="Document - Fejri Wassim - GLPI.pdf" download class="btn-link text-xs">
                                 <i class="fas fa-download mr-2"></i> Télécharger
                             </a>
                         </div>
                     </div>
-                    <div class="p-6 bg-blue-50/50 rounded-2xl border border-blue-100 text-center">
+                    <div class="p-6 bg-white rounded-2xl border border-blue-100 text-center shadow-sm">
                         <h4 class="font-bold underline mb-3 italic">Activité 2 : Cluster DHCP</h4>
                         <p class="text-xs text-slate-700 mb-4 italic">Mise en place et configuration d’un cluster DHCP haute disponibilité pour sécuriser la distribution des adresses IP à la M2L.</p>
                         <div class="flex justify-center gap-2">
-                            <a href="Fiche E6 - Fejri Wassim - DHCP.docx" target="_blank" class="btn-link text-xs">
+                            <a href="Document - Fejri Wassim - GLPI.pdf" target="_blank" class="btn-link text-xs bg-blue-600 text-white">
                                 <i class="fas fa-eye mr-2"></i> Consulter
                             </a>
-                            <a href="Fiche E6 - Fejri Wassim - DHCP.docx" download class="btn-link text-xs">
+                            <a href="Document - Fejri Wassim - GLPI.pdf" download class="btn-link text-xs">
                                 <i class="fas fa-download mr-2"></i> Télécharger
                             </a>
                         </div>
@@ -328,10 +350,16 @@
 
     <script>
     function showPage(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        // Sélection de toutes les pages
+        const pages = document.querySelectorAll('.page');
+        
+        // Cacher toutes les pages
+        pages.forEach(p => p.classList.remove('active'));
+        
         const targetPage = document.getElementById('page-' + pageId);
         
         if (targetPage) {
+            // Afficher la page cible avec l'animation CSS
             targetPage.classList.add('active');
             window.location.hash = pageId;
         }
@@ -359,7 +387,11 @@
                 link.classList.add('active-link');
             }
         });
-        window.scrollTo(0, 0);
+        
+        // Remonter en haut de page avec un léger délai pour l'animation
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 50);
     }
 
     window.onload = () => {
