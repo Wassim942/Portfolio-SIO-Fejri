@@ -267,37 +267,52 @@
     </footer>
 
     <script>
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            const targetPage = document.getElementById('page-' + pageId);
-            if (targetPage) targetPage.classList.add('active');
-
-            const nav = document.getElementById('main-nav');
-            const header = document.getElementById('common-header');
-            const footer = document.getElementById('common-footer');
-            const main = document.getElementById('main-content');
-
-            if (pageId === 'accueil') {
-                nav.classList.add('hidden');
-                header.classList.add('hidden');
-                footer.classList.add('hidden');
-                main.classList.add('hidden');
-            } else {
-                nav.classList.remove('hidden');
-                header.classList.remove('hidden');
-                footer.classList.remove('hidden');
-                main.classList.remove('hidden');
-            }
-
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active-link');
-                if (link.getAttribute('onclick') && link.getAttribute('onclick').includes("'" + pageId + "'")) {
-                    link.classList.add('active-link');
-                }
-            });
-            window.scrollTo(0, 0);
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        const targetPage = document.getElementById('page-' + pageId);
+        
+        if (targetPage) {
+            targetPage.classList.add('active');
+            
+            // Mise à jour de l'URL sans recharger la page
+            window.location.hash = pageId;
         }
-        window.onload = () => showPage('accueil');
-    </script>
+
+        const nav = document.getElementById('main-nav');
+        const header = document.getElementById('common-header');
+        const footer = document.getElementById('common-footer');
+        const main = document.getElementById('main-content');
+
+        if (pageId === 'accueil') {
+            nav.classList.add('hidden');
+            header.classList.add('hidden');
+            footer.classList.add('hidden');
+            main.classList.add('hidden');
+        } else {
+            nav.classList.remove('hidden');
+            header.classList.remove('hidden');
+            footer.classList.remove('hidden');
+            main.classList.remove('hidden');
+        }
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active-link');
+            if (link.getAttribute('onclick') && link.getAttribute('onclick').includes("'" + pageId + "'")) {
+                link.classList.add('active-link');
+            }
+        });
+        window.scrollTo(0, 0);
+    }
+
+    // Gestion de l'accès direct via l'URL au chargement
+    window.onload = () => {
+        const hash = window.location.hash.replace('#', '');
+        if (hash) {
+            showPage(hash);
+        } else {
+            showPage('accueil');
+        }
+    };
+</script>
 </body>
 </html>
