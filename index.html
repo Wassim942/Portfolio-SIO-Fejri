@@ -46,6 +46,16 @@
             background-color: #0019FF;
             color: white;
         }
+
+        .glass-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: #0019FF;
+            box-shadow: 0 10px 25px -5px rgba(0, 25, 255, 0.1);
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 flex flex-col min-h-screen">
@@ -110,7 +120,7 @@
             </div>
             <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100 grid md:grid-cols-3 gap-10">
                 <div class="md:col-span-1 space-y-6 border-r border-slate-100 pr-6 text-center">
-                    <div class="w-32 h-32 bg-slate-100 rounded-full mx-auto flex items-center justify-center border-4 border-blue-50 mb-4 text-slate-300">
+                    <div class="w-32 h-32 bg-slate-100 rounded-full mx-auto flex items-center justify-center border-4 border-blue-600 mb-4 text-slate-300">
                         <i class="fas fa-user text-6xl text-blue-600"></i>
                     </div>
                     <h3 class="text-xl font-bold uppercase tracking-tighter">Wassim Fejri</h3>
@@ -128,9 +138,9 @@
                     <div class="cv-section">
                         <h4 class="text-lg font-black text-slate-800 uppercase tracking-widest italic text-sm">Expériences Professionnelles</h4>
                         <div class="mt-6 space-y-8">
-                            <div class="relative pl-6 border-l-2 border-slate-800">
-                                <div class="absolute -left-[9px] top-1 w-4 h-4 bg-slate-800 rounded-full border-4 border-white"></div>
-                                <p class="text-xs font-bold text-slate-500 uppercase">2024 - 2026 (Alternance)</p>
+                            <div class="relative pl-6 border-l-2 border-blue-600">
+                                <div class="absolute -left-[9px] top-1 w-4 h-4 bg-blue-600 rounded-full border-4 border-white"></div>
+                                <p class="text-xs font-bold text-blue-600 uppercase">2024 - 2026 (Alternance)</p>
                                 <p class="font-bold text-slate-800 uppercase">Technicien Support</p>
                                 <p class="text-slate-700 font-medium italic mb-2">Valophis Habitat, Créteil</p>
                                 <ul class="list-disc ml-5 space-y-1 text-slate-600">
@@ -157,6 +167,18 @@
                                     <li>Mise en œuvre de solutions de virtualisation.</li>
                                 </ul>
                             </div>
+                            
+                            <div class="relative pl-6 border-l-2 border-blue-600">
+                                <div class="absolute -left-[9px] top-1 w-4 h-4 bg-blue-600 rounded-full border-4 border-white"></div>
+                                <p class="text-xs font-bold text-blue-600 uppercase">2021 - 2023</p>
+                                <p class="font-bold text-slate-800 uppercase text-blue-800">BTS MCO (Management Commercial Opérationnel)</p>
+                                <p class="text-blue-800 font-medium italic mb-2">Lycée Darius Milhaud, Le Kremlin-Bicêtre</p>
+                                <ul class="list-disc ml-5 space-y-1 text-slate-600">
+                                    <li>Gestion de la relation client et vente conseil.</li>
+                                    <li>Animation et dynamisation de l'offre commerciale.</li>
+                                    <li>Management de l'unité commerciale.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -173,14 +195,14 @@
                     <img src="6221df85c9729_.png" alt="IPSSI" class="school-logo">
                     <h3 class="text-2xl font-bold text-blue-900 mb-1 uppercase tracking-tighter">IPSSI Paris</h3>
                     <p class="text-blue-600 font-bold text-sm mb-4">BTS SIO Option SISR</p>
-                    <p class="text-slate-700 text-sm italic mb-4">Formation en alternance.</p>
+                    <p class="text-slate-700 text-sm italic mb-4">École d'informatique spécialisée dans l'alternance et les technologies de l'infrastructure et de la cybersécurité.</p>
                     <a href="https://ecole-ipssi.com/" target="_blank" class="btn-link">Pour en savoir plus</a>
                 </div>
                 <div class="bg-white p-10 rounded-3xl shadow-lg border-b-8 border-blue-700 flex flex-col items-center text-center">
                     <img src="unnamed.png" alt="Valophis" class="company-logo">
                     <h3 class="text-2xl font-bold text-blue-900 mb-1 uppercase tracking-tighter">Valophis Habitat</h3>
                     <p class="text-blue-600 font-bold text-sm mb-4">Alternant Technicien Support</p>
-                    <p class="text-slate-700 text-sm italic mb-4">Basé à Créteil.</p>
+                    <p class="text-slate-700 text-sm italic mb-4">Organisme majeur du logement social en Île-de-France, assurant la gestion et la maintenance de parcs immobiliers d'envergure.</p>
                     <a href="https://www.groupevalophis.fr/" target="_blank" class="btn-link">Pour en savoir plus</a>
                 </div>
             </div>
@@ -188,42 +210,80 @@
 
         <div id="page-epreuves" class="page max-w-6xl mx-auto px-6 py-12 space-y-12">
             <div class="flex items-center gap-4">
-                <div class="h-10 w-2 bg-slate-900 rounded-full"></div>
-                <h2 class="text-3xl font-bold italic">Dossiers d'Épreuves</h2>
+                <div class="h-10 w-2 bg-blue-600 rounded-full"></div>
+                <h2 class="text-3xl font-bold italic text-slate-800">Dossiers d'Épreuves</h2>
             </div>
             
-            <div class="bg-white p-8 rounded-3xl shadow-lg border-l-[12px] border-blue-600 text-center">
-                <h3 class="text-xl font-black uppercase text-blue-900 mb-6 tracking-widest text-sm">Épreuve E5 - Support & Services</h3>
+            <div class="glass-card p-8 rounded-3xl border-t-8 border-blue-600 text-center">
+                <div class="mb-4 text-blue-600 text-3xl"><i class="fas fa-network-wired"></i></div>
+                <h3 class="text-xl font-black uppercase text-blue-900 mb-4 tracking-widest text-sm">Épreuve E5 - Support & Services</h3>
                 
-                <div class="max-w-2xl mx-auto space-y-4 text-sm text-slate-700 mb-8 text-center">
-                    <p><strong>Coeff :</strong> 4</p>
-                    <p><strong>40 min (oral)</strong></p>
-                    <p><strong>Objectif :</strong> Évaluer les compétences du bloc « Support et mise à disposition ».</p>
-                    <p><strong>Modalités :</strong> Présentation orale (10 min) + Échange jury (30 min). Évalue la contribution dans un projet d'équipe.</p>
+                <div class="flex flex-wrap justify-center gap-4 mb-8">
+                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">Coefficient : 4</span>
+                    <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-bold">Durée : 40 min (oral)</span>
                 </div>
 
-                <div class="pt-6 border-t border-slate-100 text-center">
-                    <a href="Epreuve E5 - Tableau de synthese - Fejri Wassim.pdf" target="_blank" class="btn-link shadow-lg">
-                        <i class="fas fa-file-pdf mr-2"></i> Télécharger le Tableau de Synthèse
+                <div class="max-w-2xl mx-auto space-y-3 text-sm text-slate-700 mb-8">
+                    <p class="flex items-center justify-center gap-2"><i class="fas fa-bullseye text-blue-600"></i> <strong>Objectif :</strong> Évaluer les compétences du bloc « Support et mise à disposition ».</p>
+                    <p class="flex items-center justify-center gap-2"><i class="fas fa-comments text-blue-600"></i> <strong>Modalités :</strong> Présentation orale (10 min) + Échange jury (30 min).</p>
+                </div>
+
+                <div class="pt-6 border-t border-slate-100 flex flex-wrap justify-center gap-4">
+                    <a href="Epreuve E5 - Tableau de synthese - Fejri Wassim.pdf" target="_blank" class="btn-link shadow-lg bg-blue-600 text-white">
+                        <i class="fas fa-eye mr-2"></i> Consulter
+                    </a>
+                    <a href="Epreuve E5 - Tableau de synthese - Fejri Wassim.pdf" download class="btn-link shadow-lg">
+                        <i class="fas fa-download mr-2"></i> Télécharger
                     </a>
                 </div>
             </div>
 
-            <div class="bg-white p-8 rounded-3xl shadow-lg border-l-[12px] border-blue-600">
-                <h3 class="text-xl font-black uppercase text-blue-900 mb-4 tracking-widest text-sm text-center">Épreuve E6</h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200">
-                        <h4 class="font-bold underline mb-3 italic">Activité 1 : GLPI</h4>
-                        <div class="text-xs text-slate-700 mb-4 italic">Mise en place et configuration de l’outil de gestion GLPI pour la supervision du parc informatique de la M2L.</div>
-                        <div class="text-center">
-                            <a href="Fiche E6 - Fejri Wassim - GLPI.docx" target="_blank" class="btn-link text-xs">Télécharger la fiche GLPI</a>
+            <div class="glass-card p-8 rounded-3xl border-t-8 border-blue-600">
+                <div class="mb-4 text-blue-600 text-3xl text-center"><i class="fas fa-server"></i></div>
+                <h3 class="text-xl font-black uppercase text-blue-900 mb-4 tracking-widest text-sm text-center">Épreuve E6 - Administration Systèmes & Réseaux</h3>
+                
+                <div class="flex flex-wrap justify-center gap-4 mb-8">
+                    <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-bold">Coefficient : 4</span>
+                    <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-bold">Format : Pratique + Oral</span>
+                </div>
+
+                <div class="max-w-2xl mx-auto space-y-4 text-sm text-slate-700 mb-10 text-center">
+                    <p class="font-bold text-blue-600 uppercase text-xs tracking-widest mb-4">Organisation de l'épreuve</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-slate-50 p-3 rounded-xl border-l-4 border-blue-600">
+                            <p class="font-bold text-blue-600">Phase 1</p>
+                            <p class="text-xs">Entretien analyse (20 min)</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl border-l-4 border-blue-600">
+                            <p class="font-bold text-blue-600">Phase 2</p>
+                            <p class="text-xs">Réalisation (1h) + Validation (20 min)</p>
                         </div>
                     </div>
-                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200">
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="p-6 bg-blue-50/50 rounded-2xl border border-blue-100 text-center">
+                        <h4 class="font-bold underline mb-3 italic">Activité 1 : GLPI</h4>
+                        <p class="text-xs text-slate-700 mb-4 italic">Mise en place et configuration de l’outil de gestion GLPI pour la supervision du parc informatique de la M2L.</p>
+                        <div class="flex justify-center gap-2">
+                            <a href="Fiche E6 - Fejri Wassim - GLPI.docx" target="_blank" class="btn-link text-xs">
+                                <i class="fas fa-eye mr-2"></i> Consulter
+                            </a>
+                            <a href="Fiche E6 - Fejri Wassim - GLPI.docx" download class="btn-link text-xs">
+                                <i class="fas fa-download mr-2"></i> Télécharger
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6 bg-blue-50/50 rounded-2xl border border-blue-100 text-center">
                         <h4 class="font-bold underline mb-3 italic">Activité 2 : Cluster DHCP</h4>
-                        <div class="text-xs text-slate-700 mb-4 italic">Mise en place et configuration d’un cluster DHCP haute disponibilité pour sécuriser la distribution des adresses IP à la M2L.</div>
-                        <div class="text-center">
-                            <a href="Fiche E6 - Fejri Wassim - DHCP.docx" target="_blank" class="btn-link text-xs">Télécharger la fiche DHCP</a>
+                        <p class="text-xs text-slate-700 mb-4 italic">Mise en place et configuration d’un cluster DHCP haute disponibilité pour sécuriser la distribution des adresses IP à la M2L.</p>
+                        <div class="flex justify-center gap-2">
+                            <a href="Fiche E6 - Fejri Wassim - DHCP.docx" target="_blank" class="btn-link text-xs">
+                                <i class="fas fa-eye mr-2"></i> Consulter
+                            </a>
+                            <a href="Fiche E6 - Fejri Wassim - DHCP.docx" download class="btn-link text-xs">
+                                <i class="fas fa-download mr-2"></i> Télécharger
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -273,8 +333,6 @@
         
         if (targetPage) {
             targetPage.classList.add('active');
-            
-            // Mise à jour de l'URL sans recharger la page
             window.location.hash = pageId;
         }
 
@@ -304,7 +362,6 @@
         window.scrollTo(0, 0);
     }
 
-    // Gestion de l'accès direct via l'URL au chargement
     window.onload = () => {
         const hash = window.location.hash.replace('#', '');
         if (hash) {
@@ -313,6 +370,6 @@
             showPage('accueil');
         }
     };
-</script>
+    </script>
 </body>
 </html>
