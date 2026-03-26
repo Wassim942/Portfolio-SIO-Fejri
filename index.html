@@ -36,7 +36,20 @@
         .glass-card:hover { border-color: #0019FF; box-shadow: 0 20px 40px -15px rgba(0, 25, 255, 0.15); }
 
         body { background-color: #f8fafc; overflow-x: hidden; }
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: linear-gradient(to bottom, #f0f4ff, #ffffff); }
+        
+        #bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; background: linear-gradient(to bottom, #f0f4ff, #ffffff); }
+        #bg-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        
+        .pulse-light {
+            position: absolute; width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(0, 25, 255, 0.05) 0%, transparent 70%);
+            border-radius: 50%; animation: pulse-glow 8s infinite alternate;
+        }
+        @keyframes pulse-glow {
+            from { opacity: 0.2; transform: scale(1); }
+            to { opacity: 0.5; transform: scale(1.2); }
+        }
+
         .typing-cursor::after { content: "|"; animation: blink 0.7s infinite; margin-left: 2px; color: #0019FF; }
         @keyframes blink { 50% { opacity: 0; } }
 
@@ -44,15 +57,30 @@
             font-size: 2.25rem; font-weight: 800; color: #1e1b4b; text-transform: uppercase;
             margin-bottom: 2rem; text-align: center; letter-spacing: -0.025em;
         }
+
+        .project-item {
+            display: flex; align-items: center; justify-content: space-between;
+            background: white; padding: 0.75rem; border-radius: 12px; margin-bottom: 0.75rem;
+            border: 1px solid #e2e8f0; transition: all 0.3s ease;
+        }
+        .project-item:hover { border-color: #0019FF; transform: translateX(5px); }
+        .project-img-placeholder {
+            width: 40px; height: 40px; background: #f1f5f9; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;
+        }
     </style>
 </head>
 <body class="text-slate-900 flex flex-col min-h-screen">
-    <canvas id="bg-canvas"></canvas>
+    <div id="bg-container">
+        <canvas id="bg-canvas"></canvas>
+        <div class="pulse-light" style="top: 10%; left: 5%;"></div>
+        <div class="pulse-light" style="bottom: 10%; right: 5%; animation-delay: -4s;"></div>
+    </div>
 
     <div id="page-accueil" class="flex-col items-center justify-center text-center px-6 bg-[radial-gradient(circle_at_center,_#0019FF_0%,_#020617_100%)] text-white">
         <div class="max-w-4xl w-full border-[10px] border-blue-600/20 p-10 md:p-16 rounded-[40px] bg-slate-900/40 backdrop-blur-md shadow-2xl">
             <h1 class="text-5xl md:text-7xl font-black mb-4 tracking-tighter uppercase">Wassim Fejri</h1>
-            <p class="text-2xl md:text-3xl font-light text-blue-400 mb-6 italic">Dossier de Portfolio Numérique</p>
+            <p class="text-2xl md:text-3xl font-light text-blue-400 mb-6 italic">Portfolio</p>
             <div class="h-1 w-24 bg-blue-500 mx-auto mb-8"></div>
             <p class="text-xl font-bold uppercase tracking-[0.3em] mb-12 text-white">BTS SIO Option SISR</p>
             <div class="grid md:grid-cols-2 gap-8 text-left max-w-2xl mx-auto bg-white/5 p-8 rounded-2xl border border-white/10 mb-12 text-sm text-white">
@@ -60,7 +88,7 @@
                 <div><p class="text-blue-200 text-xs uppercase font-black mb-1 opacity-60">Localisation</p><p class="font-semibold italic text-white">Le Kremlin-Bicêtre</p><p class="text-slate-400 italic text-white">IPSSI | Valophis Habitat</p></div>
             </div>
             <button onclick="enterPortfolio()" class="group bg-blue-600 text-white font-bold px-10 py-5 rounded-full text-xl hover:bg-blue-500 transition-all shadow-xl">
-                DÉCOUVRIR MON DOSSIER <i class="fas fa-chevron-right ml-3 group-hover:translate-x-2 transition-transform"></i>
+                DECOUVRIR MON PORTFOLIO <i class="fas fa-chevron-right ml-3 group-hover:translate-x-2 transition-transform"></i>
             </button>
         </div>
     </div>
@@ -126,7 +154,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="glass-card p-6 rounded-2xl flex-grow">
+                    <div class="glass-card p-6 rounded-2xl flex-grow text-slate-700">
                         <h4 class="font-bold text-blue-600 uppercase text-xs mb-4 border-b border-blue-100 pb-2 text-slate-700">Langues</h4>
                         <ul class="space-y-2 text-sm text-slate-700">
                             <li class="flex justify-between"><span>Français</span><span class="font-bold text-blue-600 text-xs">Maternelle</span></li>
@@ -157,7 +185,7 @@
                             <div class="relative">
                                 <div class="absolute left-[-41px] top-1.5 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow-sm"></div>
                                 <h4 class="font-bold text-slate-800 uppercase text-sm">BTS SIO SISR <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded ml-2">2024 - 2026</span></h4>
-                                <p class="text-blue-800 font-medium text-[11px] mb-2 italic">IPSSI Paris</p>
+                                <p class="text-blue-800 font-medium text-[11px] mb-2 italic">IPSSI, Paris</p>
                                 <ul class="text-slate-600 text-xs space-y-1">
                                     <li>• Administration des infrastructures réseaux sécurisées.</li>
                                     <li>• Gestion et configuration de serveurs Windows et Linux.</li>
@@ -168,7 +196,7 @@
                             <div class="relative">
                                 <div class="absolute left-[-41px] top-1.5 w-4 h-4 rounded-full bg-slate-300 border-4 border-white shadow-sm"></div>
                                 <h4 class="font-bold text-slate-800 uppercase text-sm">BTS MCO <span class="text-[10px] font-bold text-slate-500 bg-slate-50 px-2 py-1 rounded ml-2">2021 - 2023</span></h4>
-                                <p class="text-blue-800 font-medium text-[11px] mb-2 italic">Lycée Darius Milhaud</p>
+                                <p class="text-blue-800 font-medium text-[11px] mb-2 italic">Lycée Darius Milhaud, Le Kremlin-Bicêtre</p>
                                 <ul class="text-slate-600 text-xs space-y-1">
                                     <li>• Développement de la relation client et vente conseil.</li>
                                     <li>• Animation et dynamisation de l'offre commerciale.</li>
@@ -227,12 +255,13 @@
                 </div>
                 <p class="text-sm mb-6 italic text-slate-700"><strong>Objectif :</strong> Évaluer les compétences du bloc « Support et mise à disposition ».</p>
                 <div class="flex justify-center gap-4">
-                    <a href="Epreuve E5 - Tableau de synthese - Fejri Wassim.pdf" target="_blank" class="btn-link bg-blue-600 text-white"><i class="fas fa-eye mr-2"></i> Consulter</a>
+                    <a href="Epreuve E5 - Tableau de synthese - Fejri Wassim.pdf" target="_blank" class="btn-link shadow-lg bg-blue-600 text-white"><i class="fas fa-eye mr-2"></i> Consulter</a>
                     <a href="Epreuve E5 - Tableau de synthese - Fejri Wassim.pdf" download class="btn-link shadow-lg"><i class="fas fa-download mr-2"></i> Télécharger</a>
                 </div>
             </div>
 
             <div class="glass-card p-8 rounded-3xl border-t-8 border-blue-600 text-slate-700">
+                <div class="mb-4 text-blue-600 text-3xl text-center"><i class="fas fa-server"></i></div>
                 <h3 class="text-xl font-black uppercase text-blue-900 mb-4 text-center">Épreuve E6 - SISR</h3>
                 <div class="flex flex-wrap justify-center gap-4 mb-4 text-xs font-bold">
                     <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full">Coefficient : 4</span>
@@ -246,8 +275,8 @@
                         <h4 class="font-bold underline mb-3 italic text-blue-900">Activité 1 : GLPI</h4>
                         <p class="text-xs text-slate-600 mb-4 flex-grow">Mise en place d'un outil de Helpdesk pour la gestion centralisée du parc informatique et le suivi des tickets d'assistance.</p>
                         <div class="flex justify-center gap-2">
-                            <a href="Document - Fejri Wassim - GLPI.pdf" target="_blank" class="btn-link text-xs bg-blue-600 text-white"><i class="fas fa-eye"></i></a>
-                            <a href="Document - Fejri Wassim - GLPI.pdf" download class="btn-link text-xs"><i class="fas fa-download"></i></a>
+                            <a href="Document - Fejri Wassim - GLPI.pdf" target="_blank" class="btn-link text-xs bg-blue-600 text-white"><i class="fas fa-eye mr-1"></i> Consulter</a>
+                            <a href="Document - Fejri Wassim - GLPI.pdf" download class="btn-link text-xs"><i class="fas fa-download mr-1"></i> Télécharger</a>
                         </div>
                     </div>
                     <div class="p-6 bg-white rounded-2xl border border-blue-100 text-center shadow-sm flex flex-col items-center">
@@ -255,8 +284,8 @@
                         <h4 class="font-bold underline mb-3 italic text-blue-900">Activité 2 : Cluster DHCP</h4>
                         <p class="text-xs text-slate-600 mb-4 flex-grow">Déploiement d'un service d'adressage IP automatisé en haute disponibilité pour assurer la continuité réseau.</p>
                         <div class="flex justify-center gap-2">
-                            <a href="Document - Fejri Wassim - GLPI.pdf" target="_blank" class="btn-link text-xs bg-blue-600 text-white"><i class="fas fa-eye"></i></a>
-                            <a href="Document - Fejri Wassim - GLPI.pdf" download class="btn-link text-xs"><i class="fas fa-download"></i></a>
+                            <a href="Document - Fejri Wassim - GLPI.pdf" target="_blank" class="btn-link text-xs bg-blue-600 text-white"><i class="fas fa-eye mr-1"></i> Consulter</a>
+                            <a href="Document - Fejri Wassim - GLPI.pdf" download class="btn-link text-xs"><i class="fas fa-download mr-1"></i> Télécharger</a>
                         </div>
                     </div>
                 </div>
@@ -264,21 +293,192 @@
 
             <div class="glass-card p-8 rounded-3xl border-t-8 border-blue-600 text-center text-slate-700">
                 <div class="mb-4 text-blue-600 text-3xl text-center"><i class="fas fa-certificate"></i></div>
-                <h3 class="text-xl font-black uppercase text-blue-900 mb-6 tracking-widest text-sm">Certifications</h3>
-                <p class="text-slate-400 italic text-sm">Section à venir...</p>
+                <h3 class="text-xl font-black uppercase text-blue-900 mb-4 tracking-widest text-sm">PARCOURS DE CERTIFICATION</h3>
+                <div class="flex flex-wrap justify-center gap-4 mb-4">
+                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">Coefficient : 1</span>
+                    <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-bold">Durée : 20 min (oral)</span>
+                </div>
+                <div class="max-w-2xl mx-auto space-y-4 text-sm">
+                    <p class="italic text-slate-700"><strong>Objectif :</strong> Valoriser l'acquisition de compétences complémentaires.</p>
+                    <p class="bg-slate-50 p-4 rounded-xl border border-slate-100">A compléter</p>
+                </div>
             </div>
         </section>
 
-        <section id="projets" class="section-padding max-w-6xl mx-auto px-6 text-center">
+        <section id="projets" class="section-padding max-w-7xl mx-auto px-6">
             <h2 class="section-title">Projets</h2>
-            <div class="grid md:grid-cols-2 gap-10">
-                <div class="glass-card p-8 rounded-2xl text-slate-700">
-                    <h3 class="text-lg font-bold text-blue-800 uppercase mb-4">Projets scolaires</h3>
-                    <div class="text-xs font-mono bg-blue-50/50 p-10 rounded-xl text-slate-400 italic">Dépôt des fiches techniques en cours...</div>
+            <div class="grid md:grid-cols-2 gap-6 items-start">
+                
+                <div class="glass-card p-6 rounded-2xl">
+                    <h3 class="text-lg font-bold text-blue-800 uppercase mb-6 border-b pb-2 text-center">Projets scolaires</h3>
+                    <div class="space-y-3">
+                        <div class="project-item">
+                            <div class="flex items-center gap-3">
+                                <div class="project-img-placeholder"><i class="fas fa-server text-slate-300"></i></div>
+                                <span class="text-xs font-medium text-slate-700">Configuration serveur Proxmox</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-item">
+                            <div class="flex items-center gap-3">
+                                <div class="project-img-placeholder"><i class="fas fa-users-cog text-slate-300"></i></div>
+                                <span class="text-xs font-medium text-slate-700">Serveur Active Directory</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-item">
+                            <div class="flex items-center gap-3">
+                                <div class="project-img-placeholder"><i class="fas fa-network-wired text-slate-300"></i></div>
+                                <span class="text-xs font-medium text-slate-700">Cluster DHCP</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-item">
+                            <div class="flex items-center gap-3">
+                                <div class="project-img-placeholder"><i class="fas fa-ticket-alt text-slate-300"></i></div>
+                                <span class="text-xs font-medium text-slate-700">Installation GLPI</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-item">
+                            <div class="flex items-center gap-3">
+                                <div class="project-img-placeholder"><i class="fas fa-shield-alt text-slate-300"></i></div>
+                                <span class="text-xs font-medium text-slate-700">Pare-feu pfSense</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-item">
+                            <div class="flex items-center gap-3">
+                                <div class="project-img-placeholder"><i class="fas fa-ethernet text-slate-300"></i></div>
+                                <span class="text-xs font-medium text-slate-700">Switch Cisco</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-item">
+                            <div class="flex items-center gap-3">
+                                <div class="project-img-placeholder"><i class="fas fa-project-diagram text-slate-300"></i></div>
+                                <span class="text-xs font-medium text-slate-700">Schéma réseau</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-item">
+                            <div class="flex items-center gap-3">
+                                <div class="project-img-placeholder"><i class="fas fa-cubes text-slate-300"></i></div>
+                                <span class="text-xs font-medium text-slate-700">Déploiements VM</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-download"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="glass-card p-8 rounded-2xl text-slate-700">
-                    <h3 class="text-lg font-bold text-blue-800 uppercase mb-4">Projets professionnels</h3>
-                    <div class="text-xs font-mono bg-blue-50/50 p-10 rounded-xl text-slate-400 italic">Dépôt des fiches techniques en cours...</div>
+
+                <div class="glass-card p-6 rounded-2xl">
+                    <h3 class="text-lg font-bold text-blue-800 uppercase mb-6 border-b pb-2 text-center">Projets professionnels</h3>
+                    <div class="space-y-3">
+                        <div class="project-item">
+                            <div class="flex items-center gap-3">
+                                <div class="project-img-placeholder"><i class="fas fa-mobile-alt text-slate-300"></i></div>
+                                <span class="text-xs font-medium text-slate-700">Déploiement Intune</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-item">
+                            <div class="flex items-center gap-3">
+                                <div class="project-img-placeholder"><i class="fas fa-user-lock text-slate-300"></i></div>
+                                <span class="text-xs font-medium text-slate-700">Gestion comptes & MDP</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-item">
+                            <div class="flex items-center gap-3">
+                                <div class="project-img-placeholder"><i class="fas fa-headset text-slate-300"></i></div>
+                                <span class="text-xs font-medium text-slate-700">Assistance technique</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-item">
+                            <div class="flex items-center gap-3">
+                                <div class="project-img-placeholder"><i class="fas fa-clipboard-list text-slate-300"></i></div>
+                                <span class="text-xs font-medium text-slate-700">Suivi tickets incidents</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-item">
+                            <div class="flex items-center gap-3">
+                                <div class="project-img-placeholder"><i class="fas fa-key text-slate-300"></i></div>
+                                <span class="text-xs font-medium text-slate-700">Déploiement Yubikey</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-item">
+                            <div class="flex items-center gap-3">
+                                <div class="project-img-placeholder"><i class="fas fa-shield-virus text-slate-300"></i></div>
+                                <span class="text-xs font-medium text-slate-700">Microsoft Authenticator</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-item">
+                            <div class="flex items-center gap-3">
+                                <div class="project-img-placeholder"><i class="fas fa-laptop-medical text-slate-300"></i></div>
+                                <span class="text-xs font-medium text-slate-700">Masterisation postes</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div class="project-item">
+                            <div class="flex items-center gap-3">
+                                <div class="project-img-placeholder"><i class="fas fa-users text-slate-300"></i></div>
+                                <span class="text-xs font-medium text-slate-700">Active Directory</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-download"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -340,18 +540,11 @@
                 let current = "";
                 sections.forEach((section) => {
                     const sectionTop = section.offsetTop;
-                    // On vérifie si on a dépassé le seuil de la section
-                    if (pageYOffset >= sectionTop - 150) { 
-                        current = section.getAttribute("id"); 
-                    }
+                    if (pageYOffset >= sectionTop - 150) { current = section.getAttribute("id"); }
                 });
-
                 navLinks.forEach((link) => {
                     link.classList.remove("active-link");
-                    // On vérifie si current n'est pas vide pour éviter de tout colorier en haut
-                    if (current !== "" && link.getAttribute("href").includes(current)) { 
-                        link.classList.add("active-link"); 
-                    }
+                    if (current !== "" && link.getAttribute("href").includes(current)) { link.classList.add("active-link"); }
                 });
             };
         }
