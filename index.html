@@ -9,21 +9,14 @@
     <style>
         .page { display: none; }
         
-        /* Animation de coulissement */
         .page.active { 
             display: block; 
             animation: slideIn 0.5s ease-out forwards;
         }
         
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         #page-accueil.active { 
@@ -40,16 +33,21 @@
         }
 
         .hero-gradient { background: linear-gradient(135deg, #0019FF 0%, #0012BB 100%); }
-        .cv-section h4 { border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; margin-bottom: 1rem; }
         .nav-link.active-link { font-weight: bold; color: #0019FF; border-bottom: 2px solid #0019FF; }
         
         .school-logo, .company-logo {
-            max-height: 120px;
-            max-width: 250px;
-            width: auto;
-            height: auto;
+            max-height: 100px;
+            max-width: 200px;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .role-text {
+            color: #0019FF;
+            font-weight: 700;
+            font-size: 0.9rem;
             margin-bottom: 1.5rem;
-            border-radius: 0.75rem;
+            text-transform: uppercase;
         }
 
         .btn-link {
@@ -67,42 +65,61 @@
         .btn-link:hover {
             background-color: #0019FF;
             color: white;
+            transform: translateY(-2px);
         }
 
         .glass-card {
-            background: white;
-            border: 1px solid #e2e8f0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 25, 255, 0.1);
             transition: all 0.3s ease;
         }
         .glass-card:hover {
             border-color: #0019FF;
-            box-shadow: 0 10px 25px -5px rgba(0, 25, 255, 0.1);
+            box-shadow: 0 20px 40px -15px rgba(0, 25, 255, 0.15);
         }
+
+        body {
+            background-color: #f8fafc;
+            overflow-x: hidden;
+        }
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(to bottom, #f0f4ff, #ffffff);
+        }
+
+        .typing-cursor::after {
+            content: "|";
+            animation: blink 0.7s infinite;
+            margin-left: 2px;
+            color: #0019FF;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 flex flex-col min-h-screen">
+<body class="text-slate-900 flex flex-col min-h-screen">
+    <canvas id="bg-canvas"></canvas>
 
     <div id="page-accueil" class="page active flex-col items-center justify-center text-center px-6 bg-[radial-gradient(circle_at_center,_#0019FF_0%,_#020617_100%)] text-white">
         <div class="max-w-4xl w-full border-[10px] border-blue-600/20 p-10 md:p-16 rounded-[40px] bg-slate-900/40 backdrop-blur-md shadow-2xl">
-            <h1 class="text-5xl md:text-7xl font-black mb-4 tracking-tighter uppercase text-white">Wassim Fejri</h1>
+            <h1 class="text-5xl md:text-7xl font-black mb-4 tracking-tighter uppercase">Wassim Fejri</h1>
             <p class="text-2xl md:text-3xl font-light text-blue-400 mb-6 italic">Dossier de Portfolio Numérique</p>
             <div class="h-1 w-24 bg-blue-500 mx-auto mb-8"></div>
-            
-            <p class="text-xl font-bold uppercase tracking-[0.3em] mb-12 text-white">BTS SIO Option SISR</p>
-            
+            <p class="text-xl font-bold uppercase tracking-[0.3em] mb-12">BTS SIO Option SISR</p>
             <div class="grid md:grid-cols-2 gap-8 text-left max-w-2xl mx-auto bg-white/5 p-8 rounded-2xl border border-white/10 mb-12 text-sm">
                 <div>
-                    <p class="text-blue-200 text-xs uppercase font-black mb-1 tracking-widest text-white/60">Candidat</p>
-                    <p class="font-semibold text-white italic">FEJRI Wassim</p>
+                    <p class="text-blue-200 text-xs uppercase font-black mb-1 tracking-widest opacity-60">Candidat</p>
+                    <p class="font-semibold italic">FEJRI Wassim</p>
                     <p class="text-slate-300 italic">Session 2026</p>
                 </div>
                 <div>
-                    <p class="text-blue-200 text-xs uppercase font-black mb-1 tracking-widest text-white/60">Localisation</p>
-                    <p class="font-semibold text-white italic">Le Kremlin-Bicêtre</p>
+                    <p class="text-blue-200 text-xs uppercase font-black mb-1 tracking-widest opacity-60">Localisation</p>
+                    <p class="font-semibold italic">Le Kremlin-Bicêtre</p>
                     <p class="text-slate-400 italic">IPSSI | Valophis Habitat</p>
                 </div>
             </div>
-
             <button onclick="showPage('propos')" class="group bg-blue-600 text-white font-bold px-10 py-5 rounded-full text-xl hover:bg-blue-500 transition-all shadow-xl">
                 DÉCOUVRIR MON DOSSIER <i class="fas fa-chevron-right ml-3 group-hover:translate-x-2 transition-transform"></i>
             </button>
@@ -112,15 +129,15 @@
     <nav id="main-nav" class="fixed w-full z-[500] bg-white/95 backdrop-blur shadow-sm hidden text-xs md:text-sm">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between h-16 items-center">
-                <button onclick="showPage('accueil')" class="flex-shrink-0 font-bold text-blue-900 text-lg hover:text-blue-600 transition">
+                <button onclick="showPage('accueil')" class="font-bold text-blue-900 text-lg">
                     WASSIM <span class="font-light text-slate-500 underline decoration-blue-500">FEJRI</span>
                 </button>
-                <div class="hidden md:flex space-x-3 lg:space-x-6 font-medium uppercase tracking-tight text-center">
-                    <button onclick="showPage('propos')" class="nav-link px-2 py-1 text-slate-700 hover:text-blue-600 transition">CV</button>
-                    <button onclick="showPage('ecole')" class="nav-link px-2 py-1 text-slate-700 hover:text-blue-600 transition">École & Entreprise</button>
-                    <button onclick="showPage('epreuves')" class="nav-link px-2 py-1 text-slate-700 hover:text-blue-600 transition">Épreuves</button>
-                    <button onclick="showPage('projets')" class="nav-link px-2 py-1 text-slate-700 hover:text-blue-600 transition">Projets</button>
-                    <button onclick="showPage('veille')" class="nav-link px-4 py-2 bg-blue-900 text-white rounded shadow-md hover:bg-blue-800 transition">Veille</button>
+                <div class="hidden md:flex space-x-6 font-medium uppercase tracking-tight">
+                    <button onclick="showPage('propos')" class="nav-link px-2 py-1 hover:text-blue-600 transition">A propos</button>
+                    <button onclick="showPage('ecole')" class="nav-link px-2 py-1 hover:text-blue-600 transition">École & Entreprise</button>
+                    <button onclick="showPage('epreuves')" class="nav-link px-2 py-1 hover:text-blue-600 transition">Épreuves</button>
+                    <button onclick="showPage('projets')" class="nav-link px-2 py-1 hover:text-blue-600 transition">Projets</button>
+                    <button onclick="showPage('veille')" class="nav-link px-4 py-2 bg-blue-900 text-white rounded hover:bg-blue-800 transition">Veille</button>
                 </div>
             </div>
         </div>
@@ -128,77 +145,116 @@
 
     <header id="common-header" class="pt-24 pb-12 hero-gradient text-white hidden">
         <div class="max-w-6xl mx-auto px-6 text-center">
-            <h1 class="text-4xl font-extrabold mb-2 uppercase tracking-tight text-white">Wassim Fejri</h1>
-            <p class="text-xl font-light opacity-90 italic text-blue-100 uppercase tracking-widest text-sm text-center">Portfolio BTS SIO SISR</p>
+            <h1 class="text-4xl font-extrabold mb-2 uppercase tracking-tight">Wassim Fejri</h1>
+            <p class="text-xl font-light opacity-90 italic uppercase tracking-widest text-sm">Portfolio BTS SIO SISR</p>
         </div>
     </header>
 
     <main id="main-content" class="flex-grow hidden">
 
         <div id="page-propos" class="page max-w-6xl mx-auto px-6 py-12">
-            <div class="flex items-center gap-4 mb-8">
-                <div class="h-10 w-2 bg-blue-600 rounded-full"></div>
-                <h2 class="text-3xl font-bold">Mon Curriculum Vitae</h2>
-            </div>
-            <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100 grid md:grid-cols-3 gap-10">
-                <div class="md:col-span-1 space-y-6 border-r border-slate-100 pr-6 text-center">
-                    <div class="w-32 h-32 bg-slate-100 rounded-full mx-auto flex items-center justify-center border-4 border-blue-600 mb-4 text-slate-300">
-                        <i class="fas fa-user text-6xl text-blue-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold uppercase tracking-tighter">Wassim Fejri</h3>
-                    <p class="text-blue-700 font-medium italic text-sm mb-4">Alternant Technicien Support</p>
-                    
-                    <div class="space-y-4 pt-6 text-sm border-t border-slate-100 text-slate-600 text-left">
-                        <p><i class="fas fa-map-marker-alt mr-3 text-blue-600"></i> Le Kremlin-Bicêtre</p>
-                        <p><i class="fas fa-phone-alt mr-3 text-blue-600"></i> 06 17 70 15 34</p>
-                        <p><i class="fas fa-envelope mr-3 text-blue-600"></i> wassimfejri9427@gmail.com</p>
-                        <p><a href="https://www.linkedin.com/in/wassim-fejri-a94529279/" target="_blank" class="hover:text-blue-600 transition"><i class="fab fa-linkedin mr-3 text-blue-600"></i> Profil LinkedIn</a></p>
-                    </div>
+            <div class="glass-card p-8 rounded-2xl shadow-sm mb-8 flex flex-col md:flex-row items-center gap-8">
+                <div class="w-32 h-32 md:w-40 md:h-40 bg-slate-100 rounded-full flex-shrink-0 flex items-center justify-center border-4 border-blue-600 overflow-hidden shadow-lg relative group">
+                    <img src="ta-photo.jpg" alt="Wassim Fejri" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-blue-600/10 group-hover:bg-transparent transition-colors"></div>
                 </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-blue-900 mb-4">
+                        Bonjour, je suis Wassim Fejri <span id="typing-text" class="text-blue-600 typing-cursor"></span>
+                    </h3>
+                    <p class="text-slate-700 leading-relaxed text-sm">
+                        Actuellement étudiant en <strong>BTS SIO option SISR</strong> (Solutions d'Infrastructure, Systèmes et Réseaux), je suis en pleine <strong>reconversion professionnelle</strong>. Auparavant étudiant en commerce, j'ai décidé de me tourner vers le secteur de l'informatique, un domaine qui me passionne depuis toujours. Ce virage me permet aujourd'hui d'allier mes compétences relationnelles acquises par le passé à ma soif d'apprendre et de maîtriser les infrastructures réseaux et systèmes.
+                    </p>
+                </div>
+            </div>
 
-                <div class="md:col-span-2 space-y-12 text-sm text-left">
-                    <div class="cv-section">
-                        <h4 class="text-lg font-black text-slate-800 uppercase tracking-widest italic text-sm">Expériences Professionnelles</h4>
-                        <div class="mt-6 space-y-8">
-                            <div class="relative pl-6 border-l-2 border-blue-600">
-                                <div class="absolute -left-[9px] top-1 w-4 h-4 bg-blue-600 rounded-full border-4 border-white"></div>
-                                <p class="text-xs font-bold text-slate-500 uppercase">2024 - 2026 (Alternance)</p>
-                                <p class="font-bold text-slate-800 uppercase">Technicien Support</p>
-                                <p class="text-slate-700 font-medium italic mb-2">Valophis Habitat, Créteil</p>
-                                <ul class="list-disc ml-5 space-y-1 text-slate-600">
-                                    <li>Support technique de proximité et à distance (Niveau 1 & 2).</li>
-                                    <li>Gestion du parc informatique via outil de ticketing (GLPI).</li>
-                                    <li>Préparation, déploiement et maintenance des postes de travail.</li>
-                                    <li>Gestion des droits utilisateurs et des accès réseaux (Active Directory).</li>
-                                </ul>
-                            </div>
+            <div class="grid md:grid-cols-3 gap-8 items-stretch">
+                <div class="md:col-span-1 flex flex-col gap-6">
+                    <div class="glass-card p-6 rounded-2xl">
+                        <div class="space-y-4 text-sm pt-2">
+                            <p><i class="fas fa-envelope mr-3 text-blue-600 w-5"></i> wassimfejri9427@gmail.com</p>
+                            <p><i class="fas fa-phone-alt mr-3 text-blue-600 w-5"></i> 06 17 70 15 34</p>
+                            <p><i class="fas fa-map-marker-alt mr-3 text-blue-600 w-5"></i> Le Kremlin-Bicêtre</p>
+                            <p><a href="https://www.linkedin.com/in/wassim-fejri-a94529279/" target="_blank" class="hover:text-blue-600 transition"><i class="fab fa-linkedin mr-3 text-blue-600 w-5"></i> LinkedIn</a></p>
                         </div>
                     </div>
 
-                    <div class="cv-section">
-                        <h4 class="text-lg font-black text-slate-800 uppercase tracking-widest italic text-sm text-blue-800">Diplômes & Formation</h4>
-                        <div class="mt-6 space-y-8">
-                            <div class="relative pl-6 border-l-2 border-blue-600">
-                                <div class="absolute -left-[9px] top-1 w-4 h-4 bg-blue-600 rounded-full border-4 border-white"></div>
-                                <p class="text-xs font-bold text-blue-600 uppercase">2024 - 2026 (En cours - Alternance)</p>
-                                <p class="font-bold text-slate-800 uppercase text-blue-800">BTS SIO Option Solutions d’Infrastructure, Systèmes & Réseaux</p>
-                                <p class="text-blue-800 font-medium italic mb-2">IPSSI, Paris</p>
-                                <ul class="list-disc ml-5 space-y-1 text-slate-600">
-                                    <li>Administration et sécurisation des infrastructures réseaux.</li>
-                                    <li>Gestion et configuration de serveurs (Windows/Linux).</li>
-                                    <li>Mise en œuvre de solutions de virtualisation.</li>
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h4 class="font-bold text-blue-600 uppercase text-xs mb-4 border-b border-blue-100 pb-2">Le BTS SIO</h4>
+                        <ul class="space-y-3 text-[11px]">
+                            <li class="p-2 bg-blue-50 rounded border-l-2 border-blue-600">
+                                <span class="font-bold text-blue-900 block mb-1">Option SISR :</span>
+                                <strong>Solutions d'Infrastructure, Systèmes et Réseaux.</strong> Expertise en réseaux et sécurité.
+                            </li>
+                            <li class="p-2 bg-slate-50 rounded border-l-2 border-slate-400">
+                                <span class="font-bold text-slate-700 block mb-1">Option SLAM :</span>
+                                <strong>Solutions Logicielles et Applications Métiers.</strong> Expertise en développement.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl flex-grow">
+                        <h4 class="font-bold text-blue-600 uppercase text-xs mb-4 border-b border-blue-100 pb-2">Langues</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex justify-between"><span>Français</span><span class="font-bold text-blue-600 text-xs">Maternelle</span></li>
+                            <li class="flex justify-between"><span>Anglais</span><span class="font-bold text-blue-600 text-xs">Avancé</span></li>
+                            <li class="flex justify-between"><span>Allemand</span><span class="font-bold text-blue-600 text-xs">Intermédiaire</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 flex flex-col gap-6">
+                    <div class="glass-card p-8 rounded-2xl">
+                        <h3 class="text-xl font-bold text-blue-600 mb-6 flex items-center gap-3">
+                            <i class="fas fa-briefcase"></i> Expérience Professionnelle
+                        </h3>
+                        <div class="relative pl-8 border-l-2 border-blue-100">
+                            <div class="absolute left-[-9px] top-1.5 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow-sm"></div>
+                            <div class="flex justify-between items-start mb-1">
+                                <h4 class="font-bold text-slate-800 uppercase text-sm">Technicien Support (Alternance)</h4>
+                                <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">2024 - Présent</span>
+                            </div>
+                            <p class="text-blue-800 font-medium text-[11px] mb-3 italic">Valophis Habitat, Créteil</p>
+                            <ul class="text-slate-600 text-xs space-y-2">
+                                <li>• Support technique de proximité et à distance.</li>
+                                <li>• Gestion du parc informatique via un outil de ticketing.</li>
+                                <li>• Préparation, masterisation et déploiement de postes de travail.</li>
+                                <li>• Gestion des droits utilisateurs via Active Directory.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-8 rounded-2xl flex-grow">
+                        <h3 class="text-xl font-bold text-blue-600 mb-6 flex items-center gap-3">
+                            <i class="fas fa-graduation-cap"></i> Formations
+                        </h3>
+                        <div class="space-y-8 relative pl-8 border-l-2 border-blue-100">
+                            <div class="relative">
+                                <div class="absolute left-[-41px] top-1.5 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow-sm"></div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h4 class="font-bold text-slate-800 uppercase text-sm">BTS SIO SISR</h4>
+                                    <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">2024 - 2026</span>
+                                </div>
+                                <p class="text-blue-800 font-medium text-[11px] mb-2 italic">IPSSI Paris</p>
+                                <ul class="text-slate-600 text-xs space-y-1">
+                                    <li>• Administration des infrastructures réseaux sécurisées.</li>
+                                    <li>• Gestion et configuration de serveurs Windows et Linux.</li>
+                                    <li>• Mise en œuvre de solutions de virtualisation (Proxmox).</li>
+                                    <li>• Apprentissage des protocoles de communication et routage.</li>
                                 </ul>
                             </div>
-                            
-                            <div class="relative pl-6 border-l-2 border-blue-600">
-                                <div class="absolute -left-[9px] top-1 w-4 h-4 bg-blue-600 rounded-full border-4 border-white"></div>
-                                <p class="text-xs font-bold text-blue-600 uppercase">2021 - 2023</p>
-                                <p class="font-bold text-slate-800 uppercase text-blue-800">BTS MCO (Management Commercial Opérationnel)</p>
-                                <p class="text-blue-800 font-medium italic mb-2">Lycée Darius Milhaud, Le Kremlin-Bicêtre</p>
-                                <ul class="list-disc ml-5 space-y-1 text-slate-600">
-                                    <li>Gestion de la relation client et vente conseil.</li>
-                                    <li>Animation et dynamisation de l'offre commerciale.</li>
-                                    <li>Management de l'unité commerciale.</li>
+                            <div class="relative">
+                                <div class="absolute left-[-41px] top-1.5 w-4 h-4 rounded-full bg-slate-300 border-4 border-white shadow-sm"></div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h4 class="font-bold text-slate-800 uppercase text-sm">BTS MCO</h4>
+                                    <span class="text-[10px] font-bold text-slate-500 bg-slate-50 px-2 py-1 rounded">2021 - 2023</span>
+                                </div>
+                                <p class="text-blue-800 font-medium text-[11px] mb-2 italic">Lycée Darius Milhaud</p>
+                                <ul class="text-slate-600 text-xs space-y-1">
+                                    <li>• Développement de la relation client et vente conseil.</li>
+                                    <li>• Animation et dynamisation de l'offre commerciale.</li>
+                                    <li>• Gestion opérationnelle et management d'équipe.</li>
+                                    <li>• Analyse de la performance et pilotage commercial.</li>
                                 </ul>
                             </div>
                         </div>
@@ -208,200 +264,151 @@
         </div>
 
         <div id="page-ecole" class="page max-w-6xl mx-auto px-6 py-12">
-            <div class="flex items-center gap-4 mb-8">
-                <div class="h-10 w-2 bg-blue-600 rounded-full"></div>
-                <h2 class="text-3xl font-bold text-slate-800">École & Entreprise</h2>
-            </div>
-            <div class="grid md:grid-cols-2 gap-8 leading-relaxed text-center">
-                <div class="bg-white p-10 rounded-3xl shadow-lg border-b-8 border-blue-700 flex flex-col items-center text-center">
+            <div class="grid md:grid-cols-2 gap-8 text-center">
+                <div class="glass-card p-10 rounded-3xl border-b-8 border-blue-600 flex flex-col items-center">
                     <img src="6221df85c9729_.png" alt="IPSSI" class="school-logo">
-                    <h3 class="text-2xl font-bold text-blue-900 mb-1 uppercase tracking-tighter">IPSSI Paris</h3>
-                    <p class="text-blue-600 font-bold text-sm mb-4">BTS SIO Option SISR</p>
-                    <p class="text-slate-700 text-sm italic mb-4">École d'informatique spécialisée dans l'alternance et les technologies de l'infrastructure et de la cybersécurité.</p>
-                    <a href="https://ecole-ipssi.com/" target="_blank" class="btn-link">Pour en savoir plus</a>
+                    <p class="role-text">Etudiant en BTS SIO option SISR</p>
+                    <h3 class="text-2xl font-bold text-blue-900 mb-2 uppercase">IPSSI Paris</h3>
+                    <div class="space-y-3 mb-6 text-sm text-slate-600">
+                        <p><i class="fas fa-map-marker-alt text-blue-600 mr-2"></i> Paris, France</p>
+                        <p><i class="fas fa-university text-blue-600 mr-2"></i> 10 Campus en France</p>
+                    </div>
+                    <p class="text-slate-700 text-sm italic mb-6">École d'informatique spécialisée dans l'alternance et les technologies de l'infrastructure et de la cybersécurité.</p>
+                    <div class="flex flex-col gap-2 w-full max-w-xs mt-auto">
+                        <button onclick="showPage('projets')" class="btn-link bg-blue-50"><i class="fas fa-folder-open mr-2"></i> Projets scolaires</button>
+                        <a href="https://ecole-ipssi.com/" target="_blank" class="btn-link">En savoir plus</a>
+                    </div>
                 </div>
-                <div class="bg-white p-10 rounded-3xl shadow-lg border-b-8 border-blue-700 flex flex-col items-center text-center">
+                <div class="glass-card p-10 rounded-3xl border-b-8 border-blue-600 flex flex-col items-center">
                     <img src="unnamed.png" alt="Valophis" class="company-logo">
-                    <h3 class="text-2xl font-bold text-blue-900 mb-1 uppercase tracking-tighter">Valophis Habitat</h3>
-                    <p class="text-blue-600 font-bold text-sm mb-4">Alternant Technicien Support</p>
-                    <p class="text-slate-700 text-sm italic mb-4">Organisme majeur du logement social en Île-de-France, assurant la gestion et la maintenance de parcs immobiliers d'envergure.</p>
-                    <a href="https://www.groupevalophis.fr/" target="_blank" class="btn-link">Pour en savoir plus</a>
+                    <p class="role-text">Alternant technicien support</p>
+                    <h3 class="text-2xl font-bold text-blue-900 mb-2 uppercase">Valophis Habitat</h3>
+                    <div class="space-y-3 mb-6 text-sm text-slate-600">
+                        <p><i class="fas fa-chart-line text-blue-600 mr-2"></i> CA : env. 222 Millions €</p>
+                        <p><i class="fas fa-building text-blue-600 mr-2"></i> Siège : Créteil</p>
+                    </div>
+                    <p class="text-slate-700 text-sm italic mb-6">Organisme majeur du logement social en Île-de-France, assurant la gestion et la maintenance de parcs immobiliers.</p>
+                    <div class="flex flex-col gap-2 w-full max-w-xs mt-auto">
+                        <button onclick="showPage('projets')" class="btn-link bg-blue-50"><i class="fas fa-laptop-code mr-2"></i> Projets professionnels</button>
+                        <a href="https://www.groupevalophis.fr/" target="_blank" class="btn-link">En savoir plus</a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div id="page-epreuves" class="page max-w-6xl mx-auto px-6 py-12 space-y-12">
-            <div class="flex items-center gap-4">
-                <div class="h-10 w-2 bg-slate-900 rounded-full"></div>
-                <h2 class="text-3xl font-bold italic text-slate-800">Dossiers d'Épreuves</h2>
-            </div>
-            
             <div class="glass-card p-8 rounded-3xl border-t-8 border-blue-600 text-center">
                 <div class="mb-4 text-blue-600 text-3xl"><i class="fas fa-network-wired"></i></div>
                 <h3 class="text-xl font-black uppercase text-blue-900 mb-4 tracking-widest text-sm">Épreuve E5 - Support & Services</h3>
-                
                 <div class="flex flex-wrap justify-center gap-4 mb-8">
                     <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">Coefficient : 4</span>
                     <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-bold">Durée : 40 min (oral)</span>
                 </div>
-
-                <div class="max-w-2xl mx-auto space-y-3 text-sm text-slate-700 mb-8">
-                    <p class="flex items-center justify-center gap-2"><i class="fas fa-bullseye text-blue-600"></i> <strong>Objectif :</strong> Évaluer les compétences du bloc « Support et mise à disposition ».</p>
-                    <p class="flex items-center justify-center gap-2"><i class="fas fa-comments text-blue-600"></i> <strong>Modalités :</strong> Présentation orale (10 min) + Échange jury (30 min).</p>
-                </div>
-
-                <div class="pt-6 border-t border-slate-100 flex flex-wrap justify-center gap-4">
-                    <a href="Epreuve E5 - Tableau de synthese - Fejri Wassim.pdf" target="_blank" class="btn-link shadow-lg bg-blue-600 text-white">
-                        <i class="fas fa-eye mr-2"></i> Consulter
-                    </a>
-                    <a href="Epreuve E5 - Tableau de synthese - Fejri Wassim.pdf" download class="btn-link shadow-lg">
-                        <i class="fas fa-download mr-2"></i> Télécharger
-                    </a>
+                <div class="flex justify-center gap-4">
+                    <a href="Epreuve E5 - Tableau de synthese - Fejri Wassim.pdf" target="_blank" class="btn-link shadow-lg bg-blue-600 text-white"><i class="fas fa-eye mr-2"></i> Consulter</a>
+                    <a href="Epreuve E5 - Tableau de synthese - Fejri Wassim.pdf" download class="btn-link shadow-lg"><i class="fas fa-download mr-2"></i> Télécharger</a>
                 </div>
             </div>
 
             <div class="glass-card p-8 rounded-3xl border-t-8 border-blue-600">
-                <div class="mb-4 text-blue-600 text-3xl text-center"><i class="fas fa-server"></i></div>
-                <h3 class="text-xl font-black uppercase text-blue-900 mb-4 tracking-widest text-sm text-center">Épreuve E6 - Administration Systèmes & Réseaux</h3>
-                
-                <div class="flex flex-wrap justify-center gap-4 mb-8">
-                    <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-bold">Coefficient : 4</span>
-                    <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-bold">Format : Pratique + Oral</span>
-                </div>
-
-                <div class="max-w-2xl mx-auto space-y-4 text-sm text-slate-700 mb-10 text-center">
-                    <p class="font-bold text-blue-900 uppercase text-xs tracking-widest mb-4">Organisation de l'épreuve</p>
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div class="bg-slate-50 p-3 rounded-xl border-l-4 border-blue-600">
-                            <p class="font-bold text-blue-600">Phase 1</p>
-                            <p class="text-xs">Entretien analyse (20 min)</p>
-                        </div>
-                        <div class="bg-slate-50 p-3 rounded-xl border-l-4 border-blue-600">
-                            <p class="font-bold text-blue-600">Phase 2</p>
-                            <p class="text-xs">Réalisation (1h) + Validation (20 min)</p>
-                        </div>
-                    </div>
-                </div>
-
+                <h3 class="text-xl font-black uppercase text-blue-900 mb-10 text-center">Épreuve E6 - SISR</h3>
                 <div class="grid md:grid-cols-2 gap-6">
-                    <div class="p-6 bg-white rounded-2xl border border-blue-100 text-center shadow-sm">
+                    <div class="p-6 bg-white rounded-2xl border border-blue-100 text-center shadow-sm flex flex-col">
                         <h4 class="font-bold underline mb-3 italic">Activité 1 : GLPI</h4>
-                        <p class="text-xs text-slate-700 mb-4 italic">Mise en place et configuration de l’outil de gestion GLPI pour la supervision du parc informatique de la M2L.</p>
+                        <p class="text-xs text-slate-600 mb-4 flex-grow">Mise en place d'un outil de Helpdesk pour la gestion centralisée du parc informatique et le suivi des tickets d'assistance.</p>
                         <div class="flex justify-center gap-2">
-                            <a href="Document - Fejri Wassim - GLPI.pdf" target="_blank" class="btn-link text-xs bg-blue-600 text-white">
-                                <i class="fas fa-eye mr-2"></i> Consulter
-                            </a>
-                            <a href="Document - Fejri Wassim - GLPI.pdf" download class="btn-link text-xs">
-                                <i class="fas fa-download mr-2"></i> Télécharger
-                            </a>
+                            <a href="Document - Fejri Wassim - GLPI.pdf" target="_blank" class="btn-link text-xs bg-blue-600 text-white"><i class="fas fa-eye"></i></a>
+                            <a href="Document - Fejri Wassim - GLPI.pdf" download class="btn-link text-xs"><i class="fas fa-download"></i></a>
                         </div>
                     </div>
-                    <div class="p-6 bg-white rounded-2xl border border-blue-100 text-center shadow-sm">
+                    <div class="p-6 bg-white rounded-2xl border border-blue-100 text-center shadow-sm flex flex-col">
                         <h4 class="font-bold underline mb-3 italic">Activité 2 : Cluster DHCP</h4>
-                        <p class="text-xs text-slate-700 mb-4 italic">Mise en place et configuration d’un cluster DHCP haute disponibilité pour sécuriser la distribution des adresses IP à la M2L.</p>
+                        <p class="text-xs text-slate-600 mb-4 flex-grow">Déploiement d'un service d'adressage IP automatisé en haute disponibilité pour assurer la continuité réseau.</p>
                         <div class="flex justify-center gap-2">
-                            <a href="Document - Fejri Wassim - GLPI.pdf" target="_blank" class="btn-link text-xs bg-blue-600 text-white">
-                                <i class="fas fa-eye mr-2"></i> Consulter
-                            </a>
-                            <a href="Document - Fejri Wassim - GLPI.pdf" download class="btn-link text-xs">
-                                <i class="fas fa-download mr-2"></i> Télécharger
-                            </a>
+                            <a href="Document - Fejri Wassim - GLPI.pdf" target="_blank" class="btn-link text-xs bg-blue-600 text-white"><i class="fas fa-eye"></i></a>
+                            <a href="Document - Fejri Wassim - GLPI.pdf" download class="btn-link text-xs"><i class="fas fa-download"></i></a>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl border-t-8 border-blue-600 text-center">
+                <div class="mb-4 text-blue-600 text-3xl"><i class="fas fa-certificate"></i></div>
+                <h3 class="text-xl font-black uppercase text-blue-900 mb-6 tracking-widest text-sm">Mes Certifications</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="p-6 bg-blue-50/30 rounded-2xl border border-blue-100 text-slate-400 italic text-sm">Certification à venir...</div>
+                    <div class="p-6 bg-blue-50/30 rounded-2xl border border-blue-100 text-slate-400 italic text-sm">Certification à venir...</div>
+                    <div class="p-6 bg-blue-50/30 rounded-2xl border border-blue-100 text-slate-400 italic text-sm">Certification à venir...</div>
                 </div>
             </div>
         </div>
 
-        <div id="page-projets" class="page max-w-6xl mx-auto px-6 py-12">
-            <div class="flex items-center gap-4 mb-8">
-                <div class="h-10 w-2 bg-blue-600 rounded-full"></div>
-                <h2 class="text-3xl font-bold text-slate-800">Réalisations de Projets</h2>
-            </div>
-            <div class="grid md:grid-cols-2 gap-10 text-center text-sm">
-                <div class="space-y-6">
-                    <h3 class="text-lg font-bold text-blue-800 border-b pb-2 uppercase italic tracking-widest">École (IPSSI)</h3>
-                    <div class="project-card bg-white p-6 rounded-2xl shadow border-l-4 border-blue-500">
-                        <h4 class="font-bold text-slate-800 mb-2 italic">Projet Académique</h4>
-                        <div class="text-xs font-mono bg-slate-50 p-4 rounded text-slate-400 italic text-center">[ FICHIER À UPLOADER ]</div>
-                    </div>
+        <div id="page-projets" class="page max-w-6xl mx-auto px-6 py-12 text-center">
+            <h2 class="text-3xl font-bold text-blue-900 mb-10">Mes Réalisations</h2>
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="glass-card p-8 rounded-2xl">
+                    <h3 class="text-lg font-bold text-blue-800 uppercase mb-4">Projets scolaires</h3>
+                    <div class="text-xs font-mono bg-blue-50/50 p-10 rounded-xl text-slate-400 italic">Dépôt des fiches techniques en cours...</div>
                 </div>
-                <div class="space-y-6">
-                    <h3 class="text-lg font-bold text-blue-800 border-b pb-2 uppercase italic tracking-widest">Entreprise (Valophis)</h3>
-                    <div class="project-card bg-white p-6 rounded-2xl shadow border-l-4 border-blue-500">
-                        <h4 class="font-bold text-slate-800 mb-2 italic">Projet Professionnel</h4>
-                        <div class="text-xs font-mono bg-slate-50 p-4 rounded text-slate-400 italic text-center">[ FICHIER À UPLOADER ]</div>
-                    </div>
+                <div class="glass-card p-8 rounded-2xl">
+                    <h3 class="text-lg font-bold text-blue-800 uppercase mb-4">Projets professionnels</h3>
+                    <div class="text-xs font-mono bg-blue-50/50 p-10 rounded-xl text-slate-400 italic">Dépôt des fiches techniques en cours...</div>
                 </div>
             </div>
         </div>
 
         <div id="page-veille" class="page max-w-6xl mx-auto px-6 py-12">
-            <div class="bg-slate-900 text-white p-12 rounded-[40px] shadow-2xl">
-                <h2 class="text-3xl font-bold mb-8 italic underline decoration-blue-500 text-center uppercase tracking-widest">Veille Technologique</h2>
-                <div class="p-6 bg-white/5 rounded-2xl border border-white/10 text-slate-400 font-mono text-sm text-center">[ ZONE LIBRE ]</div>
+            <div class="bg-slate-900 text-white p-12 rounded-[40px] shadow-2xl text-center">
+                <h2 class="text-3xl font-bold mb-8 italic underline decoration-blue-500 uppercase">Veille Technologique</h2>
+                <div class="p-6 bg-white/5 rounded-2xl border border-white/10 text-slate-400 font-mono text-sm">[ ZONE LIBRE ]</div>
             </div>
         </div>
-
     </main>
 
-    <footer id="common-footer" class="bg-white border-t py-8 text-center text-slate-400 text-xs hidden uppercase">
+    <footer id="common-footer" class="bg-white/80 backdrop-blur border-t py-8 text-center text-slate-400 text-xs hidden uppercase">
         <p>Wassim Fejri © 2026 — Portfolio BTS SIO SISR</p>
     </footer>
 
     <script>
-    function showPage(pageId) {
-        // Sélection de toutes les pages
-        const pages = document.querySelectorAll('.page');
-        
-        // Cacher toutes les pages
-        pages.forEach(p => p.classList.remove('active'));
-        
-        const targetPage = document.getElementById('page-' + pageId);
-        
-        if (targetPage) {
-            // Afficher la page cible avec l'animation CSS
-            targetPage.classList.add('active');
-            window.location.hash = pageId;
-        }
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resize); resize();
 
-        const nav = document.getElementById('main-nav');
-        const header = document.getElementById('common-header');
-        const footer = document.getElementById('common-footer');
-        const main = document.getElementById('main-content');
+    class Particle {
+        constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.size = Math.random() * 2 + 1; this.speedX = Math.random() * 0.4 - 0.2; this.speedY = Math.random() * 0.4 - 0.2; }
+        update() { this.x += this.speedX; this.y += this.speedY; if (this.x > canvas.width) this.x = 0; if (this.x < 0) this.x = canvas.width; if (this.y > canvas.height) this.y = 0; if (this.y < 0) this.y = canvas.height; }
+        draw() { ctx.fillStyle = 'rgba(0, 25, 255, 0.12)'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+    }
+    function initParticles() { for (let i = 0; i < 70; i++) particles.push(new Particle()); }
+    function animateBackground() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animateBackground); }
+    initParticles(); animateBackground();
 
-        if (pageId === 'accueil') {
-            nav.classList.add('hidden');
-            header.classList.add('hidden');
-            footer.classList.add('hidden');
-            main.classList.add('hidden');
-        } else {
-            nav.classList.remove('hidden');
-            header.classList.remove('hidden');
-            footer.classList.remove('hidden');
-            main.classList.remove('hidden');
-        }
-
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.classList.remove('active-link');
-            if (link.getAttribute('onclick') && link.getAttribute('onclick').includes("'" + pageId + "'")) {
-                link.classList.add('active-link');
-            }
-        });
-        
-        // Remonter en haut de page avec un léger délai pour l'animation
-        setTimeout(() => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }, 50);
+    const textToType = "étudiant en BTS SIO option SISR";
+    let index = 0; let isDeleting = false; let speed = 100;
+    function typeWriterEffect() {
+        const target = document.getElementById("typing-text");
+        if (!target) return;
+        const currentText = isDeleting ? textToType.substring(0, index--) : textToType.substring(0, index++);
+        target.innerHTML = currentText;
+        if (!isDeleting && index === textToType.length + 1) { isDeleting = true; speed = 2000; } 
+        else if (isDeleting && index === 0) { isDeleting = false; speed = 500; } 
+        else { speed = isDeleting ? 50 : 100; }
+        setTimeout(typeWriterEffect, speed);
     }
 
-    window.onload = () => {
-        const hash = window.location.hash.replace('#', '');
-        if (hash) {
-            showPage(hash);
-        } else {
-            showPage('accueil');
-        }
-    };
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        const targetPage = document.getElementById('page-' + pageId);
+        if (targetPage) { targetPage.classList.add('active'); window.location.hash = pageId; if(pageId === 'propos') { index = 0; isDeleting = false; } }
+        const nav = document.getElementById('main-nav'), header = document.getElementById('common-header'), footer = document.getElementById('common-footer'), main = document.getElementById('main-content');
+        if (pageId === 'accueil') { [nav, header, footer, main].forEach(el => el.classList.add('hidden')); } 
+        else { [nav, header, footer, main].forEach(el => el.classList.remove('hidden')); }
+        document.querySelectorAll('.nav-link').forEach(link => { link.classList.toggle('active-link', link.getAttribute('onclick').includes("'" + pageId + "'")); });
+        setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
+    }
+    window.onload = () => { typeWriterEffect(); const hash = window.location.hash.replace('#', ''); showPage(hash || 'accueil'); };
     </script>
 </body>
 </html>
