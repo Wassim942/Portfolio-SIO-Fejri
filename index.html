@@ -10,13 +10,72 @@
         html { scroll-behavior: smooth; }
         .section-padding { padding-top: 50px; padding-bottom: 30px; }
         
-        #page-accueil { 
-            display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            z-index: 1000; transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
-        }
-        #page-accueil.hidden-home { transform: translateY(-100%); }
+        #page-accueil { display: none; }
 
-        .hero-gradient { background: linear-gradient(135deg, #0019FF 0%, #0012BB 100%); }
+        .hero-gradient { 
+            background: radial-gradient(circle at center, #0019FF 0%, #000a4d 100%); 
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- Éléments de décor ajoutés --- */
+        .hero-grid {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            top: 0;
+            left: -50%;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(60deg);
+            transform-origin: center top;
+            animation: grid-move 20s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes grid-move {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 150, 255, 0.2) 0%, transparent 70%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Effet Matrix Subtil */
+        #matrix-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.15;
+        }
+
+        .tech-shape {
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            animation: float 6s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
         .nav-link.active-link { font-weight: bold; color: #0019FF !important; border-bottom: 2px solid #0019FF; }
         
         .school-logo, .company-logo { max-height: 100px; max-width: 200px; margin-bottom: 0.5rem; border-radius: 0.5rem; }
@@ -35,9 +94,9 @@
         }
         .glass-card:hover { border-color: #0019FF; box-shadow: 0 20px 40px -15px rgba(0, 25, 255, 0.15); }
 
-        body { background-color: #f8fafc; overflow-x: hidden; }
+        body { background-color: #f1f5f9; overflow-x: hidden; }
         
-        #bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; background: linear-gradient(to bottom, #f0f4ff, #ffffff); }
+        #bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; background: linear-gradient(to bottom, #e2e8f0, #f8fafc); }
         #bg-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         
         .pulse-light {
@@ -68,6 +127,13 @@
             width: 40px; height: 40px; background: #f1f5f9; border-radius: 8px;
             display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;
         }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+        .bounce-arrow { animation: bounce 2s infinite; }
     </style>
 </head>
 <body class="text-slate-900 flex flex-col min-h-screen">
@@ -77,23 +143,7 @@
         <div class="pulse-light" style="bottom: 10%; right: 5%; animation-delay: -4s;"></div>
     </div>
 
-    <div id="page-accueil" class="flex-col items-center justify-center text-center px-6 bg-[radial-gradient(circle_at_center,_#0019FF_0%,_#020617_100%)] text-white">
-        <div class="max-w-4xl w-full border-[10px] border-blue-600/20 p-10 md:p-16 rounded-[40px] bg-slate-900/40 backdrop-blur-md shadow-2xl">
-            <h1 class="text-5xl md:text-7xl font-black mb-4 tracking-tighter uppercase">Wassim Fejri</h1>
-            <p class="text-2xl md:text-3xl font-light text-blue-400 mb-6 italic">Portfolio</p>
-            <div class="h-1 w-24 bg-blue-500 mx-auto mb-8"></div>
-            <p class="text-xl font-bold uppercase tracking-[0.3em] mb-12 text-white">BTS SIO Option SISR</p>
-            <div class="grid md:grid-cols-2 gap-8 text-left max-w-2xl mx-auto bg-white/5 p-8 rounded-2xl border border-white/10 mb-12 text-sm text-white">
-                <div><p class="text-blue-200 text-xs uppercase font-black mb-1 opacity-60">Candidat</p><p class="font-semibold italic text-white">FEJRI Wassim</p><p class="text-slate-300 italic text-white">Session 2026</p></div>
-                <div><p class="text-blue-200 text-xs uppercase font-black mb-1 opacity-60">Localisation</p><p class="font-semibold italic text-white">Le Kremlin-Bicêtre</p><p class="text-slate-400 italic text-white">IPSSI | Valophis Habitat</p></div>
-            </div>
-            <button onclick="enterPortfolio()" class="group bg-blue-600 text-white font-bold px-10 py-5 rounded-full text-xl hover:bg-blue-500 transition-all shadow-xl">
-                DECOUVRIR MON PORTFOLIO <i class="fas fa-chevron-right ml-3 group-hover:translate-x-2 transition-transform"></i>
-            </button>
-        </div>
-    </div>
-
-    <nav id="main-nav" class="fixed w-full z-[500] bg-white/95 backdrop-blur shadow-sm hidden text-xs md:text-sm">
+    <nav id="main-nav" class="fixed w-full z-[500] bg-white/95 backdrop-blur shadow-sm text-xs md:text-sm">
         <div class="max-w-7xl mx-auto px-4 flex justify-between h-16 items-center">
             <button onclick="window.scrollTo(0,0)" class="font-bold text-blue-900 text-lg">WASSIM <span class="font-light text-slate-500 underline decoration-blue-500">FEJRI</span></button>
             <div id="nav-links" class="hidden md:flex space-x-6 font-medium uppercase tracking-tight">
@@ -106,14 +156,32 @@
         </div>
     </nav>
 
-    <header id="common-header" class="pt-24 pb-12 hero-gradient text-white hidden">
-        <div class="max-w-6xl mx-auto px-6 text-center">
-            <h1 class="text-4xl font-extrabold mb-2 uppercase tracking-tight">Wassim Fejri</h1>
-            <p class="text-xl font-light opacity-90 italic uppercase tracking-widest text-sm">Portfolio BTS SIO SISR</p>
+    <header id="common-header" class="pt-32 pb-24 hero-gradient text-white">
+        <canvas id="matrix-canvas"></canvas>
+        
+        <div class="hero-grid"></div>
+        <div class="hero-glow"></div>
+        <div class="tech-shape w-24 h-24 top-20 left-10 opacity-20"></div>
+        <div class="tech-shape w-32 h-32 bottom-10 right-20 opacity-10" style="animation-delay: -2s;"></div>
+        
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <div class="inline-block px-4 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-xs font-bold mb-6 uppercase tracking-widest backdrop-blur-sm shadow-xl">
+                <i class="fas fa-signal mr-2 animate-pulse"></i> Session 2026
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black mb-4 uppercase tracking-tighter drop-shadow-2xl">
+                Wassim <span class="text-blue-400">Fejri</span>
+            </h1>
+            <p class="text-xl md:text-2xl font-light opacity-90 italic mb-12 drop-shadow-md">
+                BTS SIO Option SISR — <span class="font-medium text-blue-200">Solutions d'Infrastructure, Systèmes et Réseaux</span>
+            </p>
+            
+            <a href="#propos" class="inline-block text-3xl bounce-arrow transition-all hover:text-blue-300">
+                <i class="fas fa-chevron-down text-blue-400"></i>
+            </a>
         </div>
     </header>
 
-    <main id="main-content" class="flex-grow hidden">
+    <main id="main-content" class="flex-grow">
         <section id="propos" class="section-padding max-w-6xl mx-auto px-6">
             <h2 class="section-title">A propos</h2>
             <div class="glass-card p-8 rounded-2xl shadow-sm mb-8 flex flex-col md:flex-row items-center gap-8">
@@ -305,10 +373,9 @@
             </div>
         </section>
 
-        <section id="projets" class="section-padding max-w-7xl mx-auto px-6">
+        <section id="projets" class="section-padding max-w-6xl mx-auto px-6">
             <h2 class="section-title">Projets</h2>
             <div class="grid md:grid-cols-2 gap-6 items-start">
-                
                 <div class="glass-card p-6 rounded-2xl">
                     <h3 class="text-lg font-bold text-blue-800 uppercase mb-6 border-b pb-2 text-center">Projets scolaires</h3>
                     <div class="space-y-3">
@@ -491,19 +558,57 @@
         </section>
     </main>
 
-    <footer id="common-footer" class="bg-white/80 backdrop-blur border-t py-8 text-center text-slate-400 text-xs hidden uppercase">
+    <footer id="common-footer" class="bg-white/80 backdrop-blur border-t py-8 text-center text-slate-400 text-xs uppercase">
         <p>Wassim Fejri © 2026 — Portfolio BTS SIO SISR</p>
     </footer>
 
     <script>
-        function enterPortfolio() {
-            document.getElementById('page-accueil').classList.add('hidden-home');
-            document.getElementById('main-nav').classList.remove('hidden');
-            document.getElementById('common-header').classList.remove('hidden');
-            document.getElementById('main-content').classList.remove('hidden');
-            document.getElementById('common-footer').classList.remove('hidden');
-            setTimeout(typeWriterEffect, 1000);
+        window.onload = function() {
+            setTimeout(typeWriterEffect, 500);
             initScrollSpy();
+            initMatrix(); // Lancement de l'effet Matrix
+        };
+
+        // --- SCRIPT MATRIX ---
+        function initMatrix() {
+            const mCanvas = document.getElementById('matrix-canvas');
+            const mCtx = mCanvas.getContext('2d');
+            const header = document.getElementById('common-header');
+
+            function resizeMatrix() {
+                mCanvas.width = header.offsetWidth;
+                mCanvas.height = header.offsetHeight;
+            }
+            resizeMatrix();
+            window.addEventListener('resize', resizeMatrix);
+
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%&@#";
+            const fontSize = 14;
+            const columns = mCanvas.width / fontSize;
+            const drops = [];
+
+            for (let i = 0; i < columns; i++) {
+                drops[i] = 1;
+            }
+
+            function drawMatrix() {
+                mCtx.fillStyle = 'rgba(0, 10, 77, 0.1)'; 
+                mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
+
+                mCtx.fillStyle = '#0019FF'; 
+                mCtx.font = fontSize + 'px monospace';
+
+                for (let i = 0; i < drops.length; i++) {
+                    const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                    mCtx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                    if (drops[i] * fontSize > mCanvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+            setInterval(drawMatrix, 50);
         }
 
         const canvas = document.getElementById('bg-canvas');
@@ -511,10 +616,29 @@
         let particles = [];
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
+        
         class Particle {
-            constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.size = Math.random() * 2 + 1; this.speedX = Math.random() * 0.4 - 0.2; this.speedY = Math.random() * 0.4 - 0.2; }
-            update() { this.x += this.speedX; this.y += this.speedY; if (this.x > canvas.width) this.x = 0; if (this.x < 0) this.x = canvas.width; if (this.y > canvas.height) this.y = 0; if (this.y < 0) this.y = canvas.height; }
-            draw() { ctx.fillStyle = 'rgba(0, 25, 255, 0.12)'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+            constructor() { 
+                this.x = Math.random() * canvas.width; 
+                this.y = Math.random() * canvas.height; 
+                this.size = Math.random() * 2 + 1; 
+                this.speedX = Math.random() * 0.4 - 0.2; 
+                this.speedY = Math.random() * 0.4 - 0.2; 
+            }
+            update() { 
+                this.x += this.speedX; 
+                this.y += this.speedY; 
+                if (this.x > canvas.width) this.x = 0; 
+                if (this.x < 0) this.x = canvas.width; 
+                if (this.y > canvas.height) this.y = 0; 
+                if (this.y < 0) this.y = canvas.height; 
+            }
+            draw() { 
+                ctx.fillStyle = 'rgba(0, 80, 255, 0.4)'; 
+                ctx.beginPath(); 
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); 
+                ctx.fill(); 
+            }
         }
         function initParticles() { for (let i = 0; i < 70; i++) particles.push(new Particle()); }
         function animateBackground() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animateBackground); }
