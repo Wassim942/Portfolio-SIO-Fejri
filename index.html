@@ -718,6 +718,11 @@
             initMatrix();
             initParticlesBackground();
             initCarousels();
+            // AJOUT : Force le scroll si une ancre est présente dans l'URL (ex: #epreuves)
+            if(window.location.hash) {
+                const element = document.querySelector(window.location.hash);
+                if(element) element.scrollIntoView({ behavior: 'smooth' });
+            }
         };
 
         function initCarousels() {
